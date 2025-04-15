@@ -102,6 +102,40 @@ def draw_card_to_canvas(c, title, layout):
         )
 
 
+def draw_crop_marks(c, x, y, width, height, mark_len=0.25 * inch, bleed=0.125 * inch):
+    c.setStrokeColor(black)
+    c.setLineWidth(0.25)
+
+    # === Corner Crop Marks ===
+    # Left & Right (vertical)
+    for dx in [0, width]:
+        # Top
+        c.line(x + dx, y + height + bleed, x + dx, y + height + bleed + mark_len)
+        # Bottom
+        c.line(x + dx, y - bleed, x + dx, y - bleed - mark_len)
+
+    # Top & Bottom (horizontal)
+    for dy in [0, height]:
+        # Left
+        c.line(x - bleed, y + dy, x - bleed - mark_len, y + dy)
+        # Right
+        c.line(x + width + bleed, y + dy, x + width + bleed + mark_len, y + dy)
+
+    # # === Center Edge Crop Marks ===
+    # mid_x = x + width / 2
+    # mid_y = y + height / 2
+
+    # # Top Center
+    # c.line(mid_x, y + height + bleed, mid_x, y + height + bleed + mark_len)
+    # # Bottom Center
+    # c.line(mid_x, y - bleed, mid_x, y - bleed - mark_len)
+
+    # # Left Center
+    # c.line(x - bleed - mark_len, mid_y, x - bleed, mid_y)
+    # # Right Center
+    # c.line(x + width + bleed, mid_y, x + width + bleed + mark_len, mid_y)
+
+
 # === PDF Creation Functions ===
 
 
@@ -131,6 +165,9 @@ def create_4up_sheet(title, layout):
         c.saveState()
         c.translate(x, y)
         draw_card_to_canvas(c, title, layout)
+        draw_crop_marks(
+            c, 0, 0, layout["card_width"], layout["card_height"]
+        )  # 0,0 in translated coords
         c.restoreState()
 
     c.showPage()
