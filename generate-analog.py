@@ -1,9 +1,9 @@
+from reportlab.lib.colors import black, gray
 from reportlab.lib.units import inch
 from reportlab.pdfgen import canvas
-from reportlab.lib.colors import black, gray
 
 # Output PDF path
-output_path = "final_adjusted_today_card_3x5.pdf"
+output_path = "today_card_3x5.pdf"
 
 # Card size
 card_width, card_height = 3 * inch, 5 * inch
@@ -12,7 +12,7 @@ card_width, card_height = 3 * inch, 5 * inch
 c = canvas.Canvas(output_path, pagesize=(card_width, card_height))
 
 # Layout constants
-top_margin = 0.4 * inch
+top_margin = 0.25 * inch
 left_margin = 0.25 * inch
 right_margin = 0.25 * inch
 circle_radius = 0.06 * inch
@@ -29,7 +29,13 @@ c.drawString(left_margin, card_height - top_margin, "Today")
 small_circle_radius = circle_radius / 1.5
 circle_spacing = 0.14 * inch
 # Push them slightly to the right beyond task line end
-circle_x_right = left_margin + circle_offset + circle_radius + line_length + small_circle_radius * 1.6
+circle_x_right = (
+    left_margin
+    + circle_offset
+    + circle_radius
+    + line_length
+    + small_circle_radius * 1.6
+)
 circle_y_top = card_height - top_margin + 0.12 * inch
 
 # Draw 3 small top-right circles
@@ -60,8 +66,12 @@ for i in range(10):
 
     # Task line
     c.setStrokeColor(gray)
-    c.line(left_margin + circle_offset + circle_radius, y,
-           left_margin + circle_offset + circle_radius + line_length, y)
+    c.line(
+        left_margin + circle_offset + circle_radius,
+        y,
+        left_margin + circle_offset + circle_radius + line_length,
+        y,
+    )
 
 # Finalize PDF
 c.showPage()
