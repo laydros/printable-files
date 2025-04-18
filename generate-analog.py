@@ -155,10 +155,10 @@ def create_4up_sheet(title, layout):
     c = canvas.Canvas(path, pagesize=(letter_width, letter_height))
 
     positions = [
-        (0.5 * inch, 0.5 * inch),
-        (4.5 * inch, 0.5 * inch),
-        (0.5 * inch, 5.5 * inch),
-        (4.5 * inch, 5.5 * inch),
+        (0 * inch, 5.5 * inch),  # top-left
+        (3 * inch, 5.5 * inch),  # top-right
+        (0 * inch, 0.5 * inch),  # bottom-left
+        (3 * inch, 0.5 * inch),  # bottom-right
     ]
 
     for x, y in positions:
