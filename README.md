@@ -36,6 +36,19 @@ tracked in git:
 The 4-up sheets are laid out so adjacent cards share a cut line, which means
 fewer passes with the trimmer.
 
+Re-running the generator always shows all six PDFs as modified in git, even
+when nothing about the layout changed. reportlab stamps a creation timestamp
+and a producer string into every file, which is roughly 60 bytes of difference
+per PDF. Unless you actually changed the drawing, revert them:
+
+```sh
+git checkout -- cards/ sheets/
+```
+
+To tell a real change from that noise, compare the decompressed content
+streams rather than the raw bytes. The drawing operators live there and the
+metadata does not.
+
 ## Layout tweaks
 
 All the geometry lives in the `layout` dict near the top of
